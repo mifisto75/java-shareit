@@ -24,12 +24,12 @@ public class UserController {
 
     @PostMapping
     public UserDto addUser(@Valid @RequestBody User user) { //создание пользывателя
-     return userService.userDao.addUser(user);
+        return userService.userDao.addUser(user);
     }
 
     @PatchMapping("/{userId}")
     public UserDto updateUser(@RequestBody User user, @PathVariable Integer userId) { // обновление пользывателя
-        return userService.userDao.updateUser(user , userId );
+        return userService.userDao.updateUser(user, userId);
     }
 
     @GetMapping("/{userId}")

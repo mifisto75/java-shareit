@@ -50,16 +50,16 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<ItemDto> getAllItemsOneUser(int ownerId) {
-        return itemStorage.values().stream().filter(item -> item.getOwner() == ownerId).
-                map(ItemMapper::toItemDto).collect(Collectors.toList());
+        return itemStorage.values().stream().filter(item -> item.getOwner() == ownerId)
+                        .map(ItemMapper::toItemDto).collect(Collectors.toList());
     }
 
     @Override
     public List<ItemDto> searchItemByText(String text) {
-        return itemStorage.values().stream().filter(Item::getAvailable).
-                filter(item -> item.getName().toLowerCase().contains(text.toLowerCase()) ||
-                        item.getDescription().toLowerCase().contains(text.toLowerCase())).
-                map(ItemMapper::toItemDto).collect(Collectors.toList());
+        return itemStorage.values().stream().filter(Item::getAvailable)
+                        .filter(item -> item.getName().toLowerCase().contains(text.toLowerCase()) ||
+                        item.getDescription().toLowerCase().contains(text.toLowerCase()))
+                                .map(ItemMapper::toItemDto).collect(Collectors.toList());
     }
 
     @Override
