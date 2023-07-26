@@ -3,51 +3,51 @@ package ru.practicum.shareit.user.dao;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exeptions.Conflict;
 import ru.practicum.shareit.exeptions.NotFoundException;
-import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Component
 public class UserDaoImpl implements UserDao {
     private int nextUserId = 1;
-    public HashMap<Integer, User> userStorage = new HashMap<>(); //хранение юзеров в памяти
+    public Map<Integer, User> userStorage = new HashMap<>(); //хранение юзеров в памяти
 
     @Override
-    public UserDto addUser(User user) {
+    public User addUser(User user) {
         checkEmailUserStorage(user);
         user.setId(nextUserId++);
         userStorage.put(user.getId(), user);
-        return UserMapper.toUserDto(user);
+        return user;
     }
 
     @Override
-    public UserDto updateUser(User user, int id) {
+    public User updateUser(User user, int id) {
         checkIdUserStorage(id);
+        User originalUser = userStorage.get(id);
         if (user.getName() != null) {
-            userStorage.get(id).setName(user.getName());
+            originalUser.setName(user.getName());
         }
         if (user.getEmail() != null) {
-            if (!user.getEmail().equals(userStorage.get(id).getEmail())) {
+            if (!user.getEmail().equals(originalUser.getEmail())) {
                 checkEmailUserStorage(user);
-                userStorage.get(id).setEmail(user.getEmail());
+                originalUser.setEmail(user.getEmail());
             }
         }
-        return UserMapper.toUserDto(userStorage.get(id));
+        return originalUser;
     }
 
     @Override
-    public UserDto getUserById(int id) {
+    public User getUserById(int id) {
         checkIdUserStorage(id);
-        return UserMapper.toUserDto(userStorage.get(id));
+        return userStorage.get(id);
     }
 
     @Override
-    public List<UserDto> getAllUser() {
-        return userStorage.values().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
+    public List<User> getAllUser() {
+        return new ArrayList<>(userStorage.values());
     }
 
 
@@ -64,10 +64,10 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
-    public void checkEmailUserStorage(User user) {
-        for (User baza : userStorage.values()) {
-            if (baza.getEmail().equals(user.getEmail())) {
+
+    private void checkEmailUserStorage(User user) {
+        for (User originalUser : userStorage.values()) {
+            if (originalUser.getEmail().equals(user.getEmail())) {
                 throw new Conflict("Эта почта уже занята ");
             }
         }

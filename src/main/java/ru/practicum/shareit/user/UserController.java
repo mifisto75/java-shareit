@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
 
 import javax.validation.Valid;
@@ -23,23 +22,23 @@ public class UserController {
 
 
     @PostMapping
-    public UserDto addUser(@Valid @RequestBody User user) { //создание пользывателя
-        return userService.userDao.addUser(user);
+    public UserDto addUser(@Valid @RequestBody UserDto userDto) { //создание пользывателя
+        return userService.addUser(userDto);
     }
 
     @PatchMapping("/{userId}")
-    public UserDto updateUser(@RequestBody User user, @PathVariable Integer userId) { // обновление пользывателя
-        return userService.userDao.updateUser(user, userId);
+    public UserDto updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId) { // обновление пользывателя
+        return userService.updateUser(userDto, userId);
     }
 
     @GetMapping("/{userId}")
     public UserDto getUserById(@PathVariable Integer userId) { // выдача пользывателя по ID
-        return userService.userDao.getUserById(userId);
+        return userService.getUserById(userId);
     }
 
     @GetMapping
     public List<UserDto> getAllUser() { // выдача всех пользывателей
-        return userService.userDao.getAllUser();
+        return userService.getAllUser();
     }
 
     @DeleteMapping("/{userId}")
