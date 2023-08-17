@@ -42,7 +42,7 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(int id){
+    public void deleteUser(int id) {
         userDao.deleteUser(id);
     }
 
