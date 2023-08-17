@@ -5,6 +5,7 @@ import ru.practicum.shareit.user.dao.UserDao;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,13 +18,13 @@ public class UserService {
         this.userDao = userDao;
     }
 
-
+    @Transactional
     public UserDto addUser(UserDto userDto) {
         User user = UserMapper.toUser(userDto);
         return UserMapper.toUserDto(userDao.addUser(user));
     }
 
-
+    @Transactional
     public UserDto updateUser(UserDto userDto, int id) {
         User user = UserMapper.toUser(userDto);
         return UserMapper.toUserDto(userDao.updateUser(user, id));
@@ -38,6 +39,11 @@ public class UserService {
     public List<UserDto> getAllUser() {
         return userDao.getAllUser().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
 
+    }
+
+    @Transactional
+    public void deleteUser(int id){
+        userDao.deleteUser(id);
     }
 
 
