@@ -14,7 +14,7 @@ public class Item {
     @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // — уникальный идентификатор вещи;
-    @Column(length = 200 , nullable = false)
+    @Column(length = 200, nullable = false)
     private String name; //  — краткое название;
     @Column(length = 1000, nullable = false)
     private String description; // — развёрнутое описание;

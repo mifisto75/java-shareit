@@ -30,6 +30,7 @@ public class ErrorHandler {
     public ErrorResponse handlerBadRequest(final BadRequest e) {
         return new ErrorResponse("BAD REQUEST", e.getMessage());
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handlerUnknownState(final UnknownState e) {

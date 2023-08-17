@@ -128,15 +128,15 @@ public class BookingDaoImpl implements BookingDao {
     @Transactional(readOnly = true)
     @Override
     public Optional<Booking> getLast(int id) {
-        return bookingRepository.findFirstByItemIdAndStatusAndStartBeforeOrderByStartDesc
-                (id, BookingStatus.APPROVED, LocalDateTime.now());
+        return bookingRepository.findFirstByItemIdAndStatusAndStartBeforeOrderByStartDesc(
+                id, BookingStatus.APPROVED, LocalDateTime.now());
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<Booking> getNext(int id) {
-        return bookingRepository.findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc
-                (id, BookingStatus.APPROVED, LocalDateTime.now());
+        return bookingRepository.findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc(
+                id, BookingStatus.APPROVED, LocalDateTime.now());
     }
 
     @Transactional(readOnly = true)
