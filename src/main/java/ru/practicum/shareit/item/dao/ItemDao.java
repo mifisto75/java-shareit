@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.dao;
 
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface ItemDao {
 
     List<Item> searchItemByText(String text);// Поиск вещи потенциальным арендатором
 
+    Comment addComment(Comment comment);
 
+    List<Comment> getAllCommentOneItem(int id);
 }

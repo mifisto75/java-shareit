@@ -17,19 +17,23 @@ public class UserService {
         this.userDao = userDao;
     }
 
+
     public UserDto addUser(UserDto userDto) {
         User user = UserMapper.toUser(userDto);
         return UserMapper.toUserDto(userDao.addUser(user));
     }
+
 
     public UserDto updateUser(UserDto userDto, int id) {
         User user = UserMapper.toUser(userDto);
         return UserMapper.toUserDto(userDao.updateUser(user, id));
     }
 
+
     public UserDto getUserById(int id) {
         return UserMapper.toUserDto(userDao.getUserById(id));
     }
+
 
     public List<UserDto> getAllUser() {
         return userDao.getAllUser().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
