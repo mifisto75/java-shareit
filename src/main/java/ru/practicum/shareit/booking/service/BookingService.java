@@ -35,15 +35,15 @@ public class BookingService {
     @Transactional
     public BookingDto addBooking(InputBookingDto inputBookingDto, Integer userId) {
         Item item = itemDao.getItemsById(inputBookingDto.getItemId());
-        if (!item.getAvailable() ) {
-            throw new BadRequest("предмет не доступен для оренды");
+        if (!item.getAvailable()) {
+            throw new BadRequest("предмет не доступен для аренды");
         } else if (item.getOwner().getId() == userId) {
-            throw new NotFoundException("предмет не доступен для оренды");
+            throw new NotFoundException("предмет не доступен для аренды");
         }
         User user = userDao.getUserById(userId);
         Booking booking = BookingMapper.fromInputBookingDtoToBooking(inputBookingDto, item, user);
         if (booking.getStart().isAfter(booking.getEnd()) || booking.getStart().equals(booking.getEnd())) {
-            throw new BadRequest("ошибка в дате оренды");
+            throw new BadRequest("ошибка в дате аренды");
         }
         return BookingMapper.toBookingDto(bookingDao.addBooking(booking));
     }
@@ -51,12 +51,10 @@ public class BookingService {
     @Transactional
     public BookingDto responseToRequest(int bookingId, int userId, Boolean answer) {
         Booking booking = bookingDao.getBookingById(bookingId);
-        if (booking.getItem().getOwner().getId() != userId  ) {
+        if (booking.getItem().getOwner().getId() != userId) {
             throw new NotFoundException("вы не можете одобрять чужие заявки");
-        }else if (!booking.getStatus().equals(BookingStatus.WAITING)){
-            throw new BadRequest("придмет уже забранирован");
-        } else if (answer == null) {
-            throw new BadRequest("без ответа");
+        } else if (!booking.getStatus().equals(BookingStatus.WAITING)){
+            throw new BadRequest("Предмет уже забронирован");
         }
         return BookingMapper.toBookingDto(bookingDao.responseToRequest(booking, answer));
     }
@@ -66,7 +64,7 @@ public class BookingService {
         userDao.checkIdUserStorage(userId);
         return BookingMapper.toBookingDto(bookingDao.getInfoBooking(bookingId, userId));
     }
-    @Transactional(readOnly = true)
+
     public List<BookingDto> getAllBookingOneUser(int userId, String state) {
         User user = userDao.getUserById(userId);
         return bookingDao.getAllBookingOneUser(user, state)
@@ -74,8 +72,8 @@ public class BookingService {
                 .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());
     }
-    @Transactional(readOnly = true)
-    public List<BookingDto>  getAllBookingOneOwner (int userId, String state) {
+
+    public List<BookingDto> getAllBookingOneOwner (int userId, String state) {
         User user = userDao.getUserById(userId);
         return bookingDao.getAllBookingOneOwner(user, state)
                 .stream()

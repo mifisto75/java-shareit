@@ -60,27 +60,27 @@ public class BookingDaoImpl implements BookingDao {
                 bookingList.addAll(bookingRepository.findAllByBookerOrderByStartDesc(user));
                 break;
             case "CURRENT":
-                bookingList.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfterOrderByStartDesc
-                        (user, LocalDateTime.now(), LocalDateTime.now()));
+                bookingList.addAll(bookingRepository.findAllByBookerAndStartBeforeAndEndAfterOrderByStartDesc(
+                        user, LocalDateTime.now(), LocalDateTime.now()));
                 break;
             case "PAST":
-                bookingList.addAll(bookingRepository.findAllByBookerAndEndBeforeOrderByStartDesc
-                        (user, LocalDateTime.now()));
+                bookingList.addAll(bookingRepository.findAllByBookerAndEndBeforeOrderByStartDesc(
+                        user, LocalDateTime.now()));
                 break;
             case "FUTURE":
-                bookingList.addAll(bookingRepository.findAllByBookerAndStartAfterOrderByStartDesc
-                        (user, LocalDateTime.now()));
+                bookingList.addAll(bookingRepository.findAllByBookerAndStartAfterOrderByStartDesc(
+                        user, LocalDateTime.now()));
                 break;
             case "WAITING":
-                bookingList.addAll(bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc
-                        (user, BookingStatus.WAITING));
+                bookingList.addAll(bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc(
+                        user, BookingStatus.WAITING));
                 break;
             case "REJECTED":
-                bookingList.addAll(bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc
-                        (user, BookingStatus.REJECTED));
+                bookingList.addAll(bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc(
+                        user, BookingStatus.REJECTED));
                 break;
             default:
-                throw new UnknownState("неизвестный параметар " + state);
+                throw new UnknownState("Неизвестный параметр " + state);
         }
         return bookingList;
     }
@@ -94,27 +94,27 @@ public class BookingDaoImpl implements BookingDao {
                 bookingList.addAll(bookingRepository.findAllByItemOwnerOrderByStartDesc(user));
                 break;
             case "CURRENT":
-                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStartBeforeAndEndAfterOrderByStartDesc
-                        (user, LocalDateTime.now(), LocalDateTime.now()));
+                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStartBeforeAndEndAfterOrderByStartDesc(
+                        user, LocalDateTime.now(), LocalDateTime.now()));
                 break;
             case "PAST":
-                bookingList.addAll(bookingRepository.findAllByItemOwnerAndEndBeforeOrderByStartDesc
-                        (user, LocalDateTime.now()));
+                bookingList.addAll(bookingRepository.findAllByItemOwnerAndEndBeforeOrderByStartDesc(
+                        user, LocalDateTime.now()));
                 break;
             case "FUTURE":
-                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStartAfterOrderByStartDesc
-                        (user, LocalDateTime.now()));
+                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStartAfterOrderByStartDesc(
+                        user, LocalDateTime.now()));
                 break;
             case "WAITING":
-                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc
-                        (user, BookingStatus.WAITING));
+                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc(
+                        user, BookingStatus.WAITING));
                 break;
             case "REJECTED":
-                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc
-                        (user, BookingStatus.REJECTED));
+                bookingList.addAll(bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc(
+                        user, BookingStatus.REJECTED));
                 break;
             default:
-                throw new UnknownState("неизвестный параметар " + state);
+                throw new UnknownState("Неизвестный параметр " + state);
         }
         return bookingList;
     }
@@ -143,7 +143,7 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public void checkUserBooking(Integer userId, Integer itemId) {
         if (!bookingRepository.existsByBookerIdAndItemIdAndEndIsBefore(userId, itemId, LocalDateTime.now())) {
-            throw new BadRequest("вы не можете остовлять коментарии на вещь которай не пользывались");
+            throw new BadRequest("вы не можете оставлять комментарии на вещь которой не полизывались");
         }
     }
 

@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User updateUser(User user, int id) {
         User originalUser = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользыатель"));
+                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользователь"));
         Optional.ofNullable(user.getEmail()).ifPresent(originalUser::setEmail);
         Optional.ofNullable(user.getName()).ifPresent(originalUser::setName);
         return userRepository.save(originalUser);
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUserById(int id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользыатель"));
+                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользователь"));
     }
 
     @Transactional(readOnly = true)
@@ -58,6 +58,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void checkIdUserStorage(int id) {
         userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользыатель"));
+                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользователь"));
     }
 }

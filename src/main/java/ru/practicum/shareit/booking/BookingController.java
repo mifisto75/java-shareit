@@ -31,8 +31,8 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public BookingDto responseToRequest(@PathVariable Integer bookingId, @RequestHeader(user) Integer userId
-            , @RequestParam Boolean approved) { // Подтверждение или отклонение запроса на бронирование.
+    public BookingDto responseToRequest(@PathVariable Integer bookingId, @RequestHeader(user) Integer userId,
+                                        @RequestParam Boolean approved) { // Подтверждение или отклонение запроса на бронирование.
         log.info("метод responseToRequest userId " + userId + "bookingId" + bookingId);
         return bookingService.responseToRequest(bookingId, userId, approved);
     }
@@ -44,15 +44,15 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<BookingDto> getAllBookingOneUser(@RequestHeader(user) Integer userId
-            , @RequestParam(defaultValue = "ALL") String state) { // Получение списка всех бронирований текущего пользователя.
+    public List<BookingDto> getAllBookingOneUser(@RequestHeader(user) Integer userId,
+                                                 @RequestParam(defaultValue = "ALL") String state) { // Получение списка всех бронирований текущего пользователя.
         log.info("метод getAllBookingOneUser userId " + userId);
         return bookingService.getAllBookingOneUser(userId, state);
     }
 
     @GetMapping("/owner")
-    public List<BookingDto> getAllBookingOneOwner(@RequestHeader(user) Integer userId
-            , @RequestParam(defaultValue = "ALL") String state) { // Получение списка бронирований для всех вещей текущего пользователя.
+    public List<BookingDto> getAllBookingOneOwner(@RequestHeader(user) Integer userId,
+                                                  @RequestParam(defaultValue = "ALL") String state) { // Получение списка бронирований для всех вещей текущего пользователя.
         log.info("метод getAllBookingOneOwner userId " + userId);
         return bookingService.getAllBookingOneOwner(userId, state);
 
