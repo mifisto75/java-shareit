@@ -24,7 +24,7 @@ public class ItemController {
 
 
     @PostMapping // addItems Добавление новой вещи
-    public ItemDto addItems(@Valid @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) int ownerId) {
+    public ItemDto addItems(@Valid @RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") int ownerId) {
         log.info("метод ddItems . userId " + ownerId);
         return itemService.addItems(itemDto, ownerId);
     }
@@ -37,7 +37,7 @@ public class ItemController {
 
 
     @GetMapping("/{itemId}") // getItemsById Просмотр информации о конкретной вещи по её идентификатору
-    public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer ownerId) {
+    public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) int ownerId) {
         log.info("метод getItemsById . userId " + ownerId + " itemId " + itemId);
         return itemService.getItemsById(itemId, ownerId);
     }
@@ -55,7 +55,7 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/comment")
-    public CommentDto addComment(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer userId,
+    public CommentDto addComment(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) int userId,
                                  @Valid @RequestBody CommentDto commentDto) {
         log.info("метод addComment . userId " + userId + " itemId " + itemId);
         return itemService.addComment(itemId, userId, commentDto);
