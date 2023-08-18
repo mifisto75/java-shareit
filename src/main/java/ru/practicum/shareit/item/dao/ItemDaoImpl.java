@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item.dao;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exeptions.NotFoundException;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
@@ -24,13 +23,13 @@ public class ItemDaoImpl implements ItemDao {
         this.commentRepository = commentRepository;
     }
 
-    @Transactional
+  //  @Transactional
     @Override
     public Item addItems(Item item) {
         return itemRepository.save(item);
     }
 
-    @Transactional
+  //  @Transactional
     @Override
     public Item updateItems(int itemId, Item item) {
         Item originalItem = itemRepository.findById(itemId)
@@ -46,14 +45,14 @@ public class ItemDaoImpl implements ItemDao {
         return itemRepository.save(originalItem);
     }
 
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     @Override
     public Item getItemsById(int itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("по вашему id не была найдена вещь"));
     }
 
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     @Override
     public List<Item> getAllItemsOneUser(int ownerId) {
         return itemRepository.findAll()
@@ -63,7 +62,7 @@ public class ItemDaoImpl implements ItemDao {
 
     }
 
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     @Override
     public List<Item> searchItemByText(String text) {
         return itemRepository.findAll()
@@ -73,14 +72,14 @@ public class ItemDaoImpl implements ItemDao {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+   // @Transactional
     @Override
     public Comment addComment(Comment comment) {
         comment.setCreated(LocalDateTime.now()); //максимально мвежая дата перед добовлением в бд
         return commentRepository.save(comment);
     }
 
-    @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     @Override
     public List<Comment> getAllCommentOneItem(int id) {
         return commentRepository.findByItemId(id);

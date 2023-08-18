@@ -40,13 +40,13 @@ public class ItemService {
         return ItemMapper.toItemDto(itemDao.addItems(item));
     }
 
-    //  @Transactional
+   // @Transactional
     public ItemDto updateItems(int itemId, ItemDto itemDto, int ownerId) {
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
         return ItemMapper.toItemDto(itemDao.updateItems(itemId, item));
     }
 
-    //   @Transactional(readOnly = true)
+   // @Transactional(readOnly = true)
     public ItemDto getItemsById(int itemId, int ownerId) {
         Item item = itemDao.getItemsById(itemId);
         ItemDto dto = ItemMapper.toItemDto(item);
@@ -58,7 +58,7 @@ public class ItemService {
     }
 
 
-    //  @Transactional(readOnly = true)
+   // @Transactional(readOnly = true)
     public List<ItemDto> getAllItemsOneUser(int ownerId) {
         return itemDao.getAllItemsOneUser(ownerId)
                 .stream()
@@ -68,7 +68,7 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
-    //  @Transactional(readOnly = true)
+  //  @Transactional(readOnly = true)
     public List<ItemDto> searchItemByText(String text) {
         if (text.isBlank()) {
             return new ArrayList<ItemDto>();
@@ -79,7 +79,7 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
-    // @Transactional
+  //  @Transactional
     public CommentDto addComment(int itemId, int userId, CommentDto commentDto) {
         bookingDao.checkUserBooking(userId, itemId);
         Item item = itemDao.getItemsById(itemId);
@@ -97,7 +97,7 @@ public class ItemService {
         return dto;
     }
 
-    //   @Transactional
+   // @Transactional
     public ItemDto setDtoNextAndLast(ItemDto dto) {
         Optional<Booking> lastBooking = bookingDao.getLast(dto.getId());
         Optional<Booking> nextBooking = bookingDao.getNext(dto.getId());

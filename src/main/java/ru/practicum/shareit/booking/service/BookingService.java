@@ -13,6 +13,8 @@ import ru.practicum.shareit.item.dao.ItemDao;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.dao.UserDao;
 import ru.practicum.shareit.user.model.User;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +32,7 @@ public class BookingService {
         this.itemDao = itemDao;
     }
 
-    //  @Transactional
+    @Transactional
     public BookingDto addBooking(InputBookingDto inputBookingDto, Integer userId) {
         Item item = itemDao.getItemsById(inputBookingDto.getItemId());
         if (!item.getAvailable()) {
@@ -46,7 +48,7 @@ public class BookingService {
         return BookingMapper.toBookingDto(bookingDao.addBooking(booking));
     }
 
-    // @Transactional
+    @Transactional
     public BookingDto responseToRequest(int bookingId, int userId, Boolean answer) {
         Booking booking = bookingDao.getBookingById(bookingId);
         if (booking.getItem().getOwner().getId() != userId) {
@@ -57,7 +59,7 @@ public class BookingService {
         return BookingMapper.toBookingDto(bookingDao.responseToRequest(booking, answer));
     }
 
-    // @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public BookingDto getInfoBooking(int bookingId, int userId) {
         userDao.checkIdUserStorage(userId);
         return BookingMapper.toBookingDto(bookingDao.getInfoBooking(bookingId, userId));
