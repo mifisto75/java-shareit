@@ -16,11 +16,11 @@ public class BookingDto {
 
     private int id;
 
-    @NotNull
+    @NotNull(message = "not NULL")
     @FutureOrPresent
     private LocalDateTime start;
 
-    @NotNull
+    @NotNull(message = "not NULL")
     @Future
     private LocalDateTime end;
 
