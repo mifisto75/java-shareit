@@ -24,26 +24,26 @@ public class ItemController {
 
 
     @PostMapping // addItems Добавление новой вещи
-    public ItemDto addItems(@Valid @RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") int ownerId) {
+    public ItemDto addItems(@Valid @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод ddItems . userId " + ownerId);
         return itemService.addItems(itemDto, ownerId);
     }
 
     @PatchMapping("/{itemId}")  //updateItems Редактирование вещи
-    public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") int ownerId) {
+    public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод updateItems . userId " + ownerId + " itemId " + itemId);
         return itemService.updateItems(itemId, itemDto, ownerId);
     }
 
 
     @GetMapping("/{itemId}") // getItemsById Просмотр информации о конкретной вещи по её идентификатору
-    public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader("X-Sharer-User-Id") int ownerId) {
+    public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод getItemsById . userId " + ownerId + " itemId " + itemId);
         return itemService.getItemsById(itemId, ownerId);
     }
 
     @GetMapping() // getAllItemsOneUser Просмотр владельцем списка всех его вещей
-    public List<ItemDto> getAllItemsOneUser(@RequestHeader("X-Sharer-User-Id") int ownerId) {
+    public List<ItemDto> getAllItemsOneUser(@RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод getAllItemsOneUser . userId " + ownerId);
         return itemService.getAllItemsOneUser(ownerId);
     }
@@ -55,7 +55,7 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/comment")
-    public CommentDto addComment(@PathVariable Integer itemId, @RequestHeader("X-Sharer-User-Id") int userId,
+    public CommentDto addComment(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer userId,
                                  @Valid @RequestBody CommentDto commentDto) {
         log.info("метод addComment . userId " + userId + " itemId " + itemId);
         return itemService.addComment(itemId, userId, commentDto);
