@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-//@RequestMapping("/items")
+@RequestMapping("/items")
 public class ItemController {
     private static final String OWNER_ID = "X-Sharer-User-Id";
     private ItemService itemService;
@@ -23,38 +23,38 @@ public class ItemController {
     }
 
 
-    @PostMapping("/items") // addItems Добавление новой вещи
+    @PostMapping // addItems Добавление новой вещи
     public ItemDto addItems(@Valid @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) int ownerId) {
         log.info("метод ddItems . userId " + ownerId);
         return itemService.addItems(itemDto, ownerId);
     }
 
-    @PatchMapping("/items/{itemId}")  //updateItems Редактирование вещи
+    @PatchMapping("/{itemId}")  //updateItems Редактирование вещи
     public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) int ownerId) {
         log.info("метод updateItems . userId " + ownerId + " itemId " + itemId);
         return itemService.updateItems(itemId, itemDto, ownerId);
     }
 
 
-    @GetMapping("/items/{itemId}") // getItemsById Просмотр информации о конкретной вещи по её идентификатору
+    @GetMapping("/{itemId}") // getItemsById Просмотр информации о конкретной вещи по её идентификатору
     public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод getItemsById . userId " + ownerId + " itemId " + itemId);
         return itemService.getItemsById(itemId, ownerId);
     }
 
-    @GetMapping("/items") // getAllItemsOneUser Просмотр владельцем списка всех его вещей
+    @GetMapping() // getAllItemsOneUser Просмотр владельцем списка всех его вещей
     public List<ItemDto> getAllItemsOneUser(@RequestHeader(OWNER_ID) int ownerId) {
         log.info("метод getAllItemsOneUser . userId " + ownerId);
         return itemService.getAllItemsOneUser(ownerId);
     }
 
-    @GetMapping("/items/search") // Поиск вещи потенциальным арендатором
+    @GetMapping("/search") // Поиск вещи потенциальным арендатором
     public List<ItemDto> searchItemByText(@RequestParam String text) {
         log.info("метод searchItemByText");
         return itemService.searchItemByText(text);
     }
 
-    @PostMapping("/items/{itemId}/comment")
+    @PostMapping("/{itemId}/comment")
     public CommentDto addComment(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer userId,
                                  @Valid @RequestBody CommentDto commentDto) {
         log.info("метод addComment . userId " + userId + " itemId " + itemId);
