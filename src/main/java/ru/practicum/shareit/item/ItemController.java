@@ -30,7 +30,8 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")  //updateItems Редактирование вещи
-    public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) Integer ownerId) {
+    public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto,
+                               @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод updateItems . userId " + ownerId + " itemId " + itemId);
         return itemService.updateItems(itemId, itemDto, ownerId);
     }
