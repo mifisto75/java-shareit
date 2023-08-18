@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 public class ItemDto {
     private int id; // — уникальный идентификатор вещи;
-    @NotBlank(message = "имя не может быть пустым")
+    @NotBlank
     private String name; //  — краткое название;
-    @NotBlank(message = "описание не может быть пустым")
+    @NotBlank
     private String description; // — развёрнутое описание;
-    @NotNull(message = "статус не может быть пустым")
+    @NotNull
     private Boolean available; // — статус о том, доступна или нет вещь для аренды;
 
     private List<CommentDto> comments;
