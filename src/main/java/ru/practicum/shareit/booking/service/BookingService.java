@@ -34,34 +34,31 @@ public class BookingService {
 
     @Transactional
     public BookingDto addBooking(InputBookingDto inputBookingDto, Integer userId) {
-        Item item = itemDao.getItemsById(inputBookingDto.getItemId());
+        Item item = itemDao.getItemById(inputBookingDto.getItemId());
         if (!item.getAvailable()) {
             throw new BadRequest("предмет не доступен для аренды");
         } else if (item.getOwner().getId() == userId) {
-            throw new NotFoundException("предмет не доступен для аренды");
+            throw new NotFoundException("вы не можете брать в аренду свои вещи");
         }
         User user = userDao.getUserById(userId);
         Booking booking = BookingMapper.fromInputBookingDtoToBooking(inputBookingDto, item, user);
-        if (booking.getStart().isAfter(booking.getEnd()) || booking.getStart().equals(booking.getEnd())) {
-            throw new BadRequest("ошибка в дате аренды");
-        }
         return BookingMapper.toBookingDto(bookingDao.addBooking(booking));
     }
 
     @Transactional
     public BookingDto responseToRequest(int bookingId, int userId, Boolean answer) {
-        Booking booking = bookingDao.getBookingById(bookingId);
-        if (booking.getItem().getOwner().getId() != userId) {
+        BookingDto dto =  BookingMapper.toBookingDto(bookingDao.getBookingById(bookingId));
+        if (dto.getItem().getOwner().getId() != userId) {
             throw new NotFoundException("вы не можете одобрять чужие заявки");
-        } else if (!booking.getStatus().equals(BookingStatus.WAITING)) {
+        } else if (!dto.getStatus().equals(BookingStatus.WAITING)) {
             throw new BadRequest("Предмет уже забронирован");
         }
-        return BookingMapper.toBookingDto(bookingDao.responseToRequest(booking, answer));
+        return BookingMapper.toBookingDto(bookingDao.responseToRequest(BookingMapper.toBooking(dto), answer));
     }
 
     @Transactional(readOnly = true)
     public BookingDto getInfoBooking(int bookingId, int userId) {
-        userDao.checkIdUserStorage(userId);
+        userDao.getUserById(userId);
         return BookingMapper.toBookingDto(bookingDao.getInfoBooking(bookingId, userId));
     }
 

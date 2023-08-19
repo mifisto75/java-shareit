@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.mapper;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.InputBookingDto;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.exeptions.BadRequest;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
@@ -17,6 +18,16 @@ public class BookingMapper {
         dto.setStatus(booking.getStatus());
         return dto;
     }
+    public static Booking toBooking(BookingDto dto) {
+        Booking booking = new Booking();
+        booking.setId(dto.getId());
+        booking.setStart(dto.getStart());
+        booking.setEnd(dto.getEnd());
+        booking.setItem(dto.getItem());
+        booking.setBooker(dto.getBooker());
+        booking.setStatus(dto.getStatus());
+        return booking;
+    }
 
     public static Booking fromInputBookingDtoToBooking(InputBookingDto inputBookingDto, Item item, User user) {
         Booking booking = new Booking();
@@ -25,6 +36,9 @@ public class BookingMapper {
         booking.setEnd(inputBookingDto.getEnd());
         booking.setItem(item);
         booking.setBooker(user);
+        if (booking.getStart().isAfter(booking.getEnd()) || booking.getStart().equals(booking.getEnd())) {
+            throw new BadRequest("ошибка в дате аренды");
+        }
         return booking;
     }
 

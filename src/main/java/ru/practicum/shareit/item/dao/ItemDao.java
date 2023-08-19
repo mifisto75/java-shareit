@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ItemDao {
 
-    Item addItems(Item item);    // addItems Добавление новой вещи
+    Item addItem(Item item);    // addItems Добавление новой вещи
 
 
-    Item updateItems(int itemId, Item item); //updateItems Редактирование вещи
+    Item updateItem(int itemId, Item item); //updateItems Редактирование вещи
 
 
-    Item getItemsById(int itemId); // getItemsById Просмотр информации о конкретной вещи по её идентификатору
+    Item getItemById(int itemId); // getItemsById Просмотр информации о конкретной вещи по её идентификатору
 
 
     List<Item> getAllItemsOneUser(int ownerId);// getAllItemsOneUser Просмотр владельцем списка всех его вещей

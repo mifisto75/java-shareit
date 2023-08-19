@@ -26,13 +26,13 @@ public class ItemDaoImpl implements ItemDao {
 
     @Transactional
     @Override
-    public Item addItems(Item item) {
+    public Item addItem(Item item) {
         return itemRepository.save(item);
     }
 
     @Transactional
     @Override
-    public Item updateItems(int itemId, Item item) {
+    public Item updateItem(int itemId, Item item) {
         Item originalItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("по вашему id не была найдена вещь"));
 
@@ -48,7 +48,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Transactional(readOnly = true)
     @Override
-    public Item getItemsById(int itemId) {
+    public Item getItemById(int itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("по вашему id не была найдена вещь"));
     }
@@ -76,7 +76,7 @@ public class ItemDaoImpl implements ItemDao {
     @Transactional
     @Override
     public Comment addComment(Comment comment) {
-        comment.setCreated(LocalDateTime.now()); //максимально мвежая дата перед добовлением в бд
+        comment.setCreated(LocalDateTime.now()); //максимально свежая дата перед добовлением в бд
         return commentRepository.save(comment);
     }
 

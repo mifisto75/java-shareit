@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUser() { // выдача всех пользывателей
-        log.info("метод getUserById");
+        log.info("метод getAllUser");
         return userService.getAllUser();
     }
 

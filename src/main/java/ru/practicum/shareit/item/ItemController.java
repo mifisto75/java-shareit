@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/items")
 public class ItemController {
-    private static final String OWNER_ID = "X-Sharer-User-Id";
+    private  final String OWNER_ID = "X-Sharer-User-Id";
     private ItemService itemService;
 
     @Autowired
@@ -26,21 +26,21 @@ public class ItemController {
     @PostMapping // addItems Добавление новой вещи
     public ItemDto addItems(@Valid @RequestBody ItemDto itemDto, @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод ddItems . userId " + ownerId);
-        return itemService.addItems(itemDto, ownerId);
+        return itemService.addItem(itemDto, ownerId);
     }
 
     @PatchMapping("/{itemId}")  //updateItems Редактирование вещи
     public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto,
                                @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод updateItems . userId " + ownerId + " itemId " + itemId);
-        return itemService.updateItems(itemId, itemDto, ownerId);
+        return itemService.updateItem(itemId, itemDto, ownerId);
     }
 
 
     @GetMapping("/{itemId}") // getItemsById Просмотр информации о конкретной вещи по её идентификатору
     public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader(OWNER_ID) Integer ownerId) {
         log.info("метод getItemsById . userId " + ownerId + " itemId " + itemId);
-        return itemService.getItemsById(itemId, ownerId);
+        return itemService.getItemById(itemId, ownerId);
     }
 
     @GetMapping() // getAllItemsOneUser Просмотр владельцем списка всех его вещей

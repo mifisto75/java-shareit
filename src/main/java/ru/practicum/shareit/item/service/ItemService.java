@@ -35,21 +35,21 @@ public class ItemService {
     }
 
     @Transactional
-    public ItemDto addItems(ItemDto itemDto, int ownerId) {
-        userDao.checkIdUserStorage(ownerId);
+    public ItemDto addItem(ItemDto itemDto, int ownerId) {
+        userDao.getUserById(ownerId);
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
-        return ItemMapper.toItemDto(itemDao.addItems(item));
+        return ItemMapper.toItemDto(itemDao.addItem(item));
     }
 
     @Transactional
-    public ItemDto updateItems(int itemId, ItemDto itemDto, int ownerId) {
+    public ItemDto updateItem(int itemId, ItemDto itemDto, int ownerId) {
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
-        return ItemMapper.toItemDto(itemDao.updateItems(itemId, item));
+        return ItemMapper.toItemDto(itemDao.updateItem(itemId, item));
     }
 
     @Transactional(readOnly = true)
-    public ItemDto getItemsById(int itemId, int ownerId) {
-        Item item = itemDao.getItemsById(itemId);
+    public ItemDto getItemById(int itemId, int ownerId) {
+        Item item = itemDao.getItemById(itemId);
         ItemDto dto = ItemMapper.toItemDto(item);
         setDtoComment(dto);
         if (ownerId == item.getOwner().getId()) {
@@ -83,14 +83,14 @@ public class ItemService {
     @Transactional
     public CommentDto addComment(int itemId, int userId, CommentDto commentDto) {
         bookingDao.checkUserBooking(userId, itemId);
-        Item item = itemDao.getItemsById(itemId);
+        Item item = itemDao.getItemById(itemId);
         User user = userDao.getUserById(userId);
         Comment comment = CommentMapper.toComment(commentDto, user, item);
         return CommentMapper.toCommentDto(itemDao.addComment(comment));
 
     }
 
-    public ItemDto setDtoComment(ItemDto dto) {
+    private ItemDto setDtoComment(ItemDto dto) {
         dto.setComments(itemDao.getAllCommentOneItem(dto.getId())
                 .stream()
                 .map(CommentMapper::toCommentDto)

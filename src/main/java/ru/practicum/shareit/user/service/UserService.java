@@ -37,7 +37,10 @@ public class UserService {
 
 
     public List<UserDto> getAllUser() {
-        return userDao.getAllUser().stream().map(UserMapper::toUserDto).collect(Collectors.toList());
+        return userDao.getAllUser()
+                .stream()
+                .map(UserMapper::toUserDto)
+                .collect(Collectors.toList());
 
     }
 

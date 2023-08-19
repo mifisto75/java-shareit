@@ -54,10 +54,4 @@ public class UserDaoImpl implements UserDao {
         userRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public void checkIdUserStorage(int id) {
-        userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("по вашему id не был найден пользователь"));
-    }
 }
