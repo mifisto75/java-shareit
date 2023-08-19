@@ -16,6 +16,4 @@ public interface UserDao {
 
     void deleteUser(int id); // удаление пользывателя
 
-    void checkIdUserStorage(int id);
-
 }
