@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/items")
 public class ItemController {
-    private  final String OWNER_ID = "X-Sharer-User-Id";
+    private final String OWNER_ID = "X-Sharer-User-Id";
     private ItemService itemService;
 
     @Autowired
