@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 public class ItemDto {
     private int id; // — уникальный идентификатор вещи;
-    @NotBlank(message = "not NULL")
+    @NotBlank
     private String name; //  — краткое название;
-    @NotBlank(message = "not NULL")
+    @NotBlank
     private String description; // — развёрнутое описание;
-    @NotNull(message = "not NULL")
+    @NotNull
     private Boolean available; // — статус о том, доступна или нет вещь для аренды;
 
     private List<CommentDto> comments;
@@ -22,7 +22,7 @@ public class ItemDto {
     private InputBookingDto lastBooking;
 
     private InputBookingDto nextBooking;
-    //private Integer request; //  — если вещь была создана по запросу другого пользователя, то в этом
+    private Integer requestId; //  — если вещь была создана по запросу другого пользователя, то в этом
     //поле будет храниться ссылка на соответствующий запрос.
 
 }

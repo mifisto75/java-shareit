@@ -12,6 +12,7 @@ import ru.practicum.shareit.item.mapper.CommentMapper;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.request.dao.RequestDao;
 import ru.practicum.shareit.user.dao.UserDao;
 import ru.practicum.shareit.user.model.User;
 
@@ -25,25 +26,32 @@ public class ItemService {
     public final ItemDao itemDao;
     private final UserDao userDao;
     private final BookingDao bookingDao;
+    private final RequestDao requestDao;
 
 
-    public ItemService(ItemDao itemDao, UserDao userDao, BookingDao bookingDao) {
+    public ItemService(ItemDao itemDao, UserDao userDao, BookingDao bookingDao, RequestDao requestDao) {
         this.itemDao = itemDao;
         this.userDao = userDao;
         this.bookingDao = bookingDao;
-
+        this.requestDao = requestDao;
     }
 
     @Transactional
     public ItemDto addItem(ItemDto itemDto, int ownerId) {
         userDao.getUserById(ownerId);
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
+        if (itemDto.getRequestId() != null) {
+            item.setRequest(requestDao.getRequestById(itemDto.getRequestId()));
+        }
         return ItemMapper.toItemDto(itemDao.addItem(item));
     }
 
     @Transactional
     public ItemDto updateItem(int itemId, ItemDto itemDto, int ownerId) {
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
+        if (itemDto.getRequestId() != null) {
+            item.setRequest(requestDao.getRequestById(itemDto.getRequestId()));
+        }
         return ItemMapper.toItemDto(itemDao.updateItem(itemId, item));
     }
 
@@ -60,8 +68,8 @@ public class ItemService {
 
 
     @Transactional(readOnly = true)
-    public List<ItemDto> getAllItemsOneUser(int ownerId) {
-        return itemDao.getAllItemsOneUser(ownerId)
+    public List<ItemDto> getAllItemsOneUser(int ownerId, int from, int size) {
+        return itemDao.getAllItemsOneUser(ownerId, from, size)
                 .stream()
                 .map(ItemMapper::toItemDto)
                 .map(this::setDtoComment)
@@ -70,11 +78,11 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public List<ItemDto> searchItemByText(String text) {
+    public List<ItemDto> searchItemByText(String text, int from, int size) {
         if (text.isBlank()) {
             return new ArrayList<ItemDto>();
         }
-        return itemDao.searchItemByText(text)
+        return itemDao.searchItemByText(text, from, size)
                 .stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());

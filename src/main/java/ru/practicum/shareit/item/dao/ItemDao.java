@@ -16,12 +16,14 @@ public interface ItemDao {
     Item getItemById(int itemId); // getItemsById Просмотр информации о конкретной вещи по её идентификатору
 
 
-    List<Item> getAllItemsOneUser(int ownerId);// getAllItemsOneUser Просмотр владельцем списка всех его вещей
+    List<Item> getAllItemsOneUser(int ownerId, int from, int size);// getAllItemsOneUser Просмотр владельцем списка всех его вещей
 
 
-    List<Item> searchItemByText(String text);// Поиск вещи потенциальным арендатором
+    List<Item> searchItemByText(String text, int from, int size);// Поиск вещи потенциальным арендатором
 
     Comment addComment(Comment comment);
 
     List<Comment> getAllCommentOneItem(int id);
+
+    List<Item> getAllItemsByOneRequest(int requestId);
 }

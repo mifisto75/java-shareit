@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.dao.BookingDao;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.InputBookingDto;
@@ -13,8 +14,6 @@ import ru.practicum.shareit.item.dao.ItemDao;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.dao.UserDao;
 import ru.practicum.shareit.user.model.User;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,17 +61,23 @@ public class BookingService {
         return BookingMapper.toBookingDto(bookingDao.getInfoBooking(bookingId, userId));
     }
 
-    public List<BookingDto> getAllBookingOneUser(int userId, String state) {
+    public List<BookingDto> getAllBookingOneUser(int userId, String state, int from, int size) {
         User user = userDao.getUserById(userId);
-        return bookingDao.getAllBookingOneUser(user, state)
+        if (from<0){ // не смотря на валидацию from в контролере я не понимаю почему она не валидируется в букинге
+            throw new BadRequest("from не может быть отрийательным ");
+        }
+        return bookingDao.getAllBookingOneUser(user, state,  from,  size)
                 .stream()
                 .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());
     }
 
-    public List<BookingDto> getAllBookingOneOwner(int userId, String state) {
+    public List<BookingDto> getAllBookingOneOwner(int userId, String state, int from, int size) {
         User user = userDao.getUserById(userId);
-        return bookingDao.getAllBookingOneOwner(user, state)
+        if (from<0){ // не смотря на валидацию from в контролере я не понимаю почему она не валидируется в букинге
+            throw new BadRequest("from не может быть отрийательным ");
+        }
+        return bookingDao.getAllBookingOneOwner(user, state,  from,  size)
                 .stream()
                 .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());

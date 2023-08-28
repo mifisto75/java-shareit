@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.dao;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exeptions.NotFoundException;
@@ -55,18 +56,17 @@ public class ItemDaoImpl implements ItemDao {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Item> getAllItemsOneUser(int ownerId) {
-        return itemRepository.findAll()
+    public List<Item> getAllItemsOneUser(int ownerId, int from, int size) {
+        return itemRepository.findAllByOwnerId(ownerId, PageRequest.of(from, size))
                 .stream()
-                .filter(item -> item.getOwner().getId() == ownerId)
                 .collect(Collectors.toList());
 
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Item> searchItemByText(String text) {
-        return itemRepository.findAll()
+    public List<Item> searchItemByText(String text, int from, int size) {
+        return itemRepository.findAll(PageRequest.of(from, size))
                 .stream()
                 .filter(Item::getAvailable)
                 .filter(item -> containsText(item, text))
@@ -84,6 +84,11 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public List<Comment> getAllCommentOneItem(int id) {
         return commentRepository.findByItemId(id);
+    }
+
+    @Override
+    public List<Item> getAllItemsByOneRequest(int requestId) {
+        return itemRepository.findAllByRequestId(requestId);
     }
 
     private boolean containsText(Item item, String text) {
