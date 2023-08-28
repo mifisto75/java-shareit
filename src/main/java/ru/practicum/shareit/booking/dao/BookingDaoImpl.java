@@ -151,7 +151,7 @@ public class BookingDaoImpl implements BookingDao {
     @Transactional(readOnly = true)
     @Override
     public void checkUserBooking(Integer userId, Integer itemId) {
-        if (!bookingRepository.existsByBookerIdAndItemIdAndEndIsBefore(userId, itemId, LocalDateTime.now())) {
+        if (!bookingRepository.existsByBookerIdAndItemIdAndStartIsBefore(userId, itemId, LocalDateTime.now())) {
             throw new BadRequest("вы не можете оставлять комментарии на вещь которой не пользовались");
         }
     }

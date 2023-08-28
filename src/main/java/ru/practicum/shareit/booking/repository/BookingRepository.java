@@ -47,6 +47,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     Optional<Booking> findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc(
             int itemId, BookingStatus status, LocalDateTime dateTime);
 
-    Boolean existsByBookerIdAndItemIdAndEndIsBefore(
+    Boolean existsByBookerIdAndItemIdAndStartIsBefore(
             int userId, int itemId, LocalDateTime time);
 }

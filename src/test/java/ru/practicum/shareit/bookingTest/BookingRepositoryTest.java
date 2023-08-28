@@ -416,7 +416,7 @@ public class BookingRepositoryTest {
     }
 
     @Test
-    void existsByBookerIdAndItemIdAndEndIsBefore() {
+    void existsByBookerIdAndItemIdAndStartIsBefore() {
         User user1 = new User();
         user1.setId(1);
         user1.setName("test1");
@@ -455,7 +455,7 @@ public class BookingRepositoryTest {
         booking2.setStatus(BookingStatus.WAITING);
         bookingRepository.save(booking2);
 
-        boolean result = bookingRepository.existsByBookerIdAndItemIdAndEndIsBefore(
+        boolean result = bookingRepository.existsByBookerIdAndItemIdAndStartIsBefore(
                 user1.getId(), item1.getId(), LocalDateTime.now());
         Assertions.assertEquals(result, false);
     }
