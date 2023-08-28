@@ -28,14 +28,14 @@ public class RequestService {
     public ItemRequestDto addRequest(ItemRequestDto dto, int requesterId) {
         User user = userDao.getUserById(requesterId);
         ItemRequest request = RequestMapper.toRequest(dto, user);
-        return RequestMapper.ToRequestDto(requestDao.addRequest(request));
+        return RequestMapper.toRequestDto(requestDao.addRequest(request));
     }
 
     public List<ItemRequestDto> getAllRequestOneUser(int requesterId) {
         User user = userDao.getUserById(requesterId);
         List<ItemRequestDto> listDto = requestDao.getAllRequestOneUser(requesterId)
                 .stream()
-                .map(RequestMapper::ToRequestDto)
+                .map(RequestMapper::toRequestDto)
                 .collect(Collectors.toList());
         listDto.forEach(this::setRequestItems);
         return listDto;
@@ -45,7 +45,7 @@ public class RequestService {
         User user = userDao.getUserById(requesterId);
         List<ItemRequestDto> listDto = requestDao.getRequestsAllUsers(user, from, size)
                 .stream()
-                .map(RequestMapper::ToRequestDto)
+                .map(RequestMapper::toRequestDto)
                 .collect(Collectors.toList());
         listDto.forEach(this::setRequestItems);
         return listDto;
@@ -53,7 +53,7 @@ public class RequestService {
 
     public ItemRequestDto getRequestById(int requestId, int requesterId) {
         User user = userDao.getUserById(requesterId);
-        ItemRequestDto dto = RequestMapper.ToRequestDto(requestDao.getRequestById(requestId));
+        ItemRequestDto dto = RequestMapper.toRequestDto(requestDao.getRequestById(requestId));
         setRequestItems(dto);
         return dto;
     }

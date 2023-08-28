@@ -17,7 +17,7 @@ public class RequestMapper {
     }
 
 
-    public static ItemRequestDto ToRequestDto(ItemRequest request) {
+    public static ItemRequestDto toRequestDto(ItemRequest request) {
         ItemRequestDto dto = new ItemRequestDto();
         dto.setId(request.getId());
         dto.setDescription(request.getDescription());
