@@ -16,6 +16,7 @@ import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -333,4 +334,129 @@ public class BookingRepositoryTest {
         Assertions.assertEquals(list.get(0), booking);
     }
 
+
+    @Test
+    void findFirstByItemIdAndStatusAndStartBeforeOrderByStartDesc() {
+        User user1 = new User();
+        user1.setId(1);
+        user1.setName("test1");
+        user1.setEmail("test1@test.com");
+        userRepository.save(user1);
+
+        Item item1 = new Item();
+        item1.setId(1);
+        item1.setName("item1");
+        item1.setDescription("description1");
+        item1.setAvailable(true);
+        item1.setOwner(user1);
+        itemRepository.save(item1);
+
+        Booking booking1 = new Booking();
+        booking1.setId(1);
+        booking1.setStart(LocalDateTime.now());
+        booking1.setEnd(LocalDateTime.of(2023, 11, 11, 11, 11, 2));
+        booking1.setItem(item1);
+        booking1.setBooker(user1);
+        booking1.setStatus(BookingStatus.APPROVED);
+        bookingRepository.save(booking1);
+
+        Booking booking2 = new Booking();
+        booking2.setId(1);
+        booking2.setStart(LocalDateTime.now());
+        booking2.setEnd(LocalDateTime.of(2023, 11, 12, 11, 11, 2));
+        booking2.setItem(item1);
+        booking2.setBooker(user1);
+        booking2.setStatus(BookingStatus.APPROVED);
+        bookingRepository.save(booking2);
+
+
+        Optional<Booking> last = bookingRepository.findFirstByItemIdAndStatusAndStartBeforeOrderByStartDesc(
+                item1.getId(), BookingStatus.APPROVED, LocalDateTime.now());
+        Assertions.assertEquals(last.get(), booking2);
+    }
+
+    @Test
+    void findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc() {
+        User user1 = new User();
+        user1.setId(1);
+        user1.setName("test1");
+        user1.setEmail("test1@test.com");
+        userRepository.save(user1);
+
+        Item item1 = new Item();
+        item1.setId(1);
+        item1.setName("item1");
+        item1.setDescription("description1");
+        item1.setAvailable(true);
+        item1.setOwner(user1);
+        itemRepository.save(item1);
+
+        Booking booking1 = new Booking();
+        booking1.setId(1);
+        booking1.setStart(LocalDateTime.now());
+        booking1.setEnd(LocalDateTime.of(2023, 11, 11, 11, 11, 2));
+        booking1.setItem(item1);
+        booking1.setBooker(user1);
+        booking1.setStatus(BookingStatus.APPROVED);
+        bookingRepository.save(booking1);
+
+        Booking booking2 = new Booking();
+        booking2.setId(1);
+        booking2.setStart(LocalDateTime.of(2023, 11, 11, 11, 11, 3));
+        booking2.setEnd(LocalDateTime.of(2023, 11, 12, 11, 11, 2));
+        booking2.setItem(item1);
+        booking2.setBooker(user1);
+        booking2.setStatus(BookingStatus.APPROVED);
+        bookingRepository.save(booking2);
+
+
+        Optional<Booking> last = bookingRepository.findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc(
+                item1.getId(), BookingStatus.APPROVED, LocalDateTime.now());
+        Assertions.assertEquals(last.get(), booking2);
+    }
+
+    @Test
+    void existsByBookerIdAndItemIdAndEndIsBefore() {
+        User user1 = new User();
+        user1.setId(1);
+        user1.setName("test1");
+        user1.setEmail("test1@test.com");
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setId(2);
+        user2.setName("test2");
+        user2.setEmail("test2@test.com");
+        userRepository.save(user2);
+
+        Item item1 = new Item();
+        item1.setId(1);
+        item1.setName("item1");
+        item1.setDescription("description1");
+        item1.setAvailable(true);
+        item1.setOwner(user1);
+        itemRepository.save(item1);
+
+        Booking booking1 = new Booking();
+        booking1.setId(1);
+        booking1.setStart(LocalDateTime.of(2023, 11, 11, 11, 11, 1));
+        booking1.setEnd(LocalDateTime.of(2023, 11, 11, 11, 11, 2));
+        booking1.setItem(item1);
+        booking1.setBooker(user1);
+        booking1.setStatus(BookingStatus.WAITING);
+        bookingRepository.save(booking1);
+
+        Booking booking2 = new Booking();
+        booking2.setId(2);
+        booking2.setStart(LocalDateTime.of(2023, 11, 12, 11, 11, 1));
+        booking2.setEnd(LocalDateTime.of(2023, 11, 12, 11, 11, 2));
+        booking2.setItem(item1);
+        booking2.setBooker(user2);
+        booking2.setStatus(BookingStatus.WAITING);
+        bookingRepository.save(booking2);
+
+        boolean result = bookingRepository.existsByBookerIdAndItemIdAndEndIsBefore(
+                user1.getId(), item1.getId(), LocalDateTime.now());
+        Assertions.assertEquals(result, false);
+    }
 }
