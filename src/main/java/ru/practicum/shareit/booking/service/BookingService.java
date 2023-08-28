@@ -46,7 +46,7 @@ public class BookingService {
 
     @Transactional
     public BookingDto responseToRequest(int bookingId, int userId, Boolean answer) {
-        BookingDto dto =  BookingMapper.toBookingDto(bookingDao.getBookingById(bookingId));
+        BookingDto dto = BookingMapper.toBookingDto(bookingDao.getBookingById(bookingId));
         if (dto.getItem().getOwner().getId() != userId) {
             throw new NotFoundException("вы не можете одобрять чужие заявки");
         } else if (!dto.getStatus().equals(BookingStatus.WAITING)) {
@@ -63,10 +63,10 @@ public class BookingService {
 
     public List<BookingDto> getAllBookingOneUser(int userId, String state, int from, int size) {
         User user = userDao.getUserById(userId);
-        if (from<0){ // не смотря на валидацию from в контролере я не понимаю почему она не валидируется в букинге
+        if (from < 0) { // не смотря на валидацию from в контролере я не понимаю почему она не валидируется в букинге
             throw new BadRequest("from не может быть отрийательным ");
         }
-        return bookingDao.getAllBookingOneUser(user, state,  from,  size)
+        return bookingDao.getAllBookingOneUser(user, state, from, size)
                 .stream()
                 .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());
@@ -74,10 +74,10 @@ public class BookingService {
 
     public List<BookingDto> getAllBookingOneOwner(int userId, String state, int from, int size) {
         User user = userDao.getUserById(userId);
-        if (from<0){ // не смотря на валидацию from в контролере я не понимаю почему она не валидируется в букинге
+        if (from < 0) { // не смотря на валидацию from в контролере я не понимаю почему она не валидируется в букинге
             throw new BadRequest("from не может быть отрийательным ");
         }
-        return bookingDao.getAllBookingOneOwner(user, state,  from,  size)
+        return bookingDao.getAllBookingOneOwner(user, state, from, size)
                 .stream()
                 .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());

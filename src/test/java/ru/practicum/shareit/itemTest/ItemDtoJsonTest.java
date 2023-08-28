@@ -33,7 +33,7 @@ public class ItemDtoJsonTest {
     }
 
     @Test
-    void ToDto() throws IOException {
+    void toDto() throws IOException {
         String jsonItemDto = "{\n" +
                 "  \"id\": \"1\",\n" +
                 "  \"name\": \"test\",\n" +

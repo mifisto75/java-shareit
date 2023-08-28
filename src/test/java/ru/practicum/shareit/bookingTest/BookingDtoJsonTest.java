@@ -39,7 +39,7 @@ public class BookingDtoJsonTest {
     }
 
     @Test
-    void ToDto() throws IOException {
+    void toDto() throws IOException {
         String jsonBookingDto = "{\n" +
                 "  \"id\": \"1\",\n" +
                 "  \"status\": \"WAITING\",\n" +

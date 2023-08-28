@@ -37,7 +37,7 @@ public class CommentDtoJsonTest {
     }
 
     @Test
-    void ToDto() throws IOException {
+    void toDto() throws IOException {
         String jsonItemDto = "{\n" +
                 "  \"id\": \"1\",\n" +
                 "  \"text\": \"test\",\n" +

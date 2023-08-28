@@ -37,8 +37,8 @@ public class ItemRequestController {
     @GetMapping("/all")
     public List<ItemRequestDto> getRequestsAllUsers(
             @RequestHeader(requester) Integer requesterId,
-            @PositiveOrZero @RequestParam(defaultValue = "0" ,required = false) Integer from,
-            @Positive @RequestParam(defaultValue = "20" ,required = false) Integer size) { // получить список запросов, созданных другими пользователями.
+            @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+            @Positive @RequestParam(defaultValue = "20", required = false) Integer size) { // получить список запросов, созданных другими пользователями.
         return requestService.getRequestsAllUsers(requesterId, from, size);
     }
 

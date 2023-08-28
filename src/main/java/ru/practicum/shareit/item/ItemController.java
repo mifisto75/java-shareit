@@ -46,19 +46,17 @@ public class ItemController {
     }
 
     @GetMapping() // getAllItemsOneUser Просмотр владельцем списка всех его вещей
-    public List<ItemDto> getAllItemsOneUser
-            (@RequestHeader(user) Integer ownerId,
-             @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
-             @Positive @RequestParam(defaultValue = "20", required = false) Integer size) {
+    public List<ItemDto> getAllItemsOneUser(@RequestHeader(user) Integer ownerId,
+                                            @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+                                            @Positive @RequestParam(defaultValue = "20", required = false) Integer size) {
         log.info("метод getAllItemsOneUser . userId " + ownerId);
         return itemService.getAllItemsOneUser(ownerId, from, size);
     }
 
     @GetMapping("/search") // Поиск вещи потенциальным арендатором
-    public List<ItemDto> searchItemByText
-            (@RequestParam String text,
-             @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
-             @Positive @RequestParam(defaultValue = "20", required = false) Integer size) {
+    public List<ItemDto> searchItemByText(@RequestParam String text,
+                                          @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+                                          @Positive @RequestParam(defaultValue = "20", required = false) Integer size) {
         log.info("метод searchItemByText");
         return itemService.searchItemByText(text, from, size);
     }

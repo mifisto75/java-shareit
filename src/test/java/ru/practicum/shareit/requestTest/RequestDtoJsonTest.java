@@ -35,7 +35,7 @@ public class RequestDtoJsonTest {
     }
 
     @Test
-    void ToDto() throws IOException {
+    void toDto() throws IOException {
         String json = "{\n" +
                 "  \"id\": \"1\",\n" +
                 "  \"description\": \"test\",\n" +

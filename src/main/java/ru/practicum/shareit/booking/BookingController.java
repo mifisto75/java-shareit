@@ -46,21 +46,19 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<BookingDto> getAllBookingOneUser
-            (@RequestHeader(user) Integer userId,
-             @RequestParam(defaultValue = "ALL") String state,
-             @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
-             @Positive @RequestParam(defaultValue = "20", required = false) Integer size) { // Получение списка всех бронирований текущего пользователя.
+    public List<BookingDto> getAllBookingOneUser(@RequestHeader(user) Integer userId,
+                                                 @RequestParam(defaultValue = "ALL") String state,
+                                                 @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+                                                 @Positive @RequestParam(defaultValue = "20", required = false) Integer size) { // Получение списка всех бронирований текущего пользователя.
         log.info("метод getAllBookingOneUser userId " + userId);
         return bookingService.getAllBookingOneUser(userId, state, from, size);
     }
 
     @GetMapping("/owner")
-    public List<BookingDto> getAllBookingOneOwner
-            (@RequestHeader(user) Integer userId,
-             @RequestParam(defaultValue = "ALL") String state,
-             @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
-             @Positive @RequestParam(defaultValue = "20", required = false) Integer size) { // Получение списка бронирований для всех вещей текущего пользователя.
+    public List<BookingDto> getAllBookingOneOwner(@RequestHeader(user) Integer userId,
+                                                  @RequestParam(defaultValue = "ALL") String state,
+                                                  @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+                                                  @Positive @RequestParam(defaultValue = "20", required = false) Integer size) { // Получение списка бронирований для всех вещей текущего пользователя.
         log.info("метод getAllBookingOneOwner userId " + userId);
         return bookingService.getAllBookingOneOwner(userId, state, from, size);
 
