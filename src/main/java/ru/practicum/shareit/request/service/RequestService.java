@@ -58,7 +58,7 @@ public class RequestService {
         return dto;
     }
 
-    public void setRequestItems(ItemRequestDto itemRequestDto) {
+    private void setRequestItems(ItemRequestDto itemRequestDto) {
         itemRequestDto.setItems(itemDao.getAllItemsByOneRequest(itemRequestDto.getId())
                 .stream()
                 .map(ItemMapper::toItemDto)

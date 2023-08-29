@@ -26,11 +26,13 @@ public class ItemRequestController {
     @PostMapping
     public ItemRequestDto addRequest(@Valid @RequestBody ItemRequestDto itemRequestDto,
                                      @RequestHeader(requester) Integer requesterId) { //добавить новый запрос вещи.
+        log.info("метод addRequest user = " + requester);
         return requestService.addRequest(itemRequestDto, requesterId);
     }
 
     @GetMapping
     public List<ItemRequestDto> getAllRequestOneUser(@RequestHeader(requester) Integer requesterId) { // получить список своих запросов
+        log.info("метод getAllRequestOneUser user = " + requester);
         return requestService.getAllRequestOneUser(requesterId);
     }
 
@@ -39,12 +41,14 @@ public class ItemRequestController {
             @RequestHeader(requester) Integer requesterId,
             @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
             @Positive @RequestParam(defaultValue = "20", required = false) Integer size) { // получить список запросов, созданных другими пользователями.
+        log.info("метод getRequestsAllUsers user = " + requester + " from = " + from + " size = " + size);
         return requestService.getRequestsAllUsers(requesterId, from, size);
     }
 
     @GetMapping("/{requestId}")
     public ItemRequestDto getRequestById(@PathVariable Integer requestId,
                                          @RequestHeader(requester) Integer requesterId) { // получить данные об одном конкретном запросе
+        log.info("метод getRequestById user = " + requester + " Id = " + requesterId);
         return requestService.getRequestById(requestId, requesterId);
     }
 
