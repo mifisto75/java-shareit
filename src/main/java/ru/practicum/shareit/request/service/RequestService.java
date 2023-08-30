@@ -32,7 +32,7 @@ public class RequestService {
     }
 
     public List<ItemRequestDto> getAllRequestOneUser(int requesterId) {
-        User user = userDao.getUserById(requesterId);
+        userDao.getUserById(requesterId);
         List<ItemRequestDto> listDto = requestDao.getAllRequestOneUser(requesterId)
                 .stream()
                 .map(RequestMapper::toRequestDto)
@@ -52,7 +52,7 @@ public class RequestService {
     }
 
     public ItemRequestDto getRequestById(int requestId, int requesterId) {
-        User user = userDao.getUserById(requesterId);
+        userDao.getUserById(requesterId);
         ItemRequestDto dto = RequestMapper.toRequestDto(requestDao.getRequestById(requestId));
         setRequestItems(dto);
         return dto;
