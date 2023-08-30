@@ -8,6 +8,8 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Slf4j
@@ -44,15 +46,19 @@ public class ItemController {
     }
 
     @GetMapping() // getAllItemsOneUser Просмотр владельцем списка всех его вещей
-    public List<ItemDto> getAllItemsOneUser(@RequestHeader(user) Integer ownerId) {
+    public List<ItemDto> getAllItemsOneUser(@RequestHeader(user) Integer ownerId,
+                                            @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+                                            @Positive @RequestParam(defaultValue = "20", required = false) Integer size) {
         log.info("метод getAllItemsOneUser . userId " + ownerId);
-        return itemService.getAllItemsOneUser(ownerId);
+        return itemService.getAllItemsOneUser(ownerId, from, size);
     }
 
     @GetMapping("/search") // Поиск вещи потенциальным арендатором
-    public List<ItemDto> searchItemByText(@RequestParam String text) {
+    public List<ItemDto> searchItemByText(@RequestParam String text,
+                                          @PositiveOrZero @RequestParam(defaultValue = "0", required = false) Integer from,
+                                          @Positive @RequestParam(defaultValue = "20", required = false) Integer size) {
         log.info("метод searchItemByText");
-        return itemService.searchItemByText(text);
+        return itemService.searchItemByText(text, from, size);
     }
 
     @PostMapping("/{itemId}/comment")
