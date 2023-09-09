@@ -23,10 +23,10 @@ public class RequestController {
 
 
     @PostMapping
-    public ResponseEntity<Object> addRequest(@Valid @RequestBody RequestDto RequestDto,
+    public ResponseEntity<Object> addRequest(@Valid @RequestBody RequestDto requestDto,
                                              @RequestHeader(requester) Integer requesterId) { //добавить новый запрос вещи.
         log.info("метод addRequest user = " + requester);
-        return requestClient.addRequest(RequestDto, requesterId);
+        return requestClient.addRequest(requestDto, requesterId);
     }
 
     @GetMapping
