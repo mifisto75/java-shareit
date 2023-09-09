@@ -36,7 +36,6 @@ public class ItemService {
         this.requestDao = requestDao;
     }
 
-    @Transactional
     public ItemDto addItem(ItemDto itemDto, int ownerId) {
         userDao.getUserById(ownerId);
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
@@ -46,7 +45,6 @@ public class ItemService {
         return ItemMapper.toItemDto(itemDao.addItem(item));
     }
 
-    @Transactional
     public ItemDto updateItem(int itemId, ItemDto itemDto, int ownerId) {
         Item item = ItemMapper.toItem(itemDto, userDao.getUserById(ownerId));
         if (itemDto.getRequestId() != null) {
@@ -55,7 +53,6 @@ public class ItemService {
         return ItemMapper.toItemDto(itemDao.updateItem(itemId, item));
     }
 
-    @Transactional(readOnly = true)
     public ItemDto getItemById(int itemId, int ownerId) {
         Item item = itemDao.getItemById(itemId);
         ItemDto dto = ItemMapper.toItemDto(item);
@@ -67,7 +64,6 @@ public class ItemService {
     }
 
 
-    @Transactional(readOnly = true)
     public List<ItemDto> getAllItemsOneUser(int ownerId, int from, int size) {
         return itemDao.getAllItemsOneUser(ownerId, from, size)
                 .stream()
@@ -77,7 +73,6 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public List<ItemDto> searchItemByText(String text, int from, int size) {
         if (text.isBlank()) {
             return new ArrayList<ItemDto>();
@@ -88,7 +83,6 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public CommentDto addComment(int itemId, int userId, CommentDto commentDto) {
         bookingDao.checkUserBooking(userId, itemId);
         Item item = itemDao.getItemById(itemId);
@@ -106,7 +100,6 @@ public class ItemService {
         return dto;
     }
 
-    @Transactional
     public ItemDto setDtoNextAndLast(ItemDto dto) {
         Optional<Booking> lastBooking = bookingDao.getLast(dto.getId());
         Optional<Booking> nextBooking = bookingDao.getNext(dto.getId());

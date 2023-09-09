@@ -31,7 +31,6 @@ public class BookingService {
         this.itemDao = itemDao;
     }
 
-    @Transactional
     public BookingDto addBooking(InputBookingDto inputBookingDto, Integer userId) {
         Item item = itemDao.getItemById(inputBookingDto.getItemId());
         if (!item.getAvailable()) {
@@ -44,7 +43,6 @@ public class BookingService {
         return BookingMapper.toBookingDto(bookingDao.addBooking(booking));
     }
 
-    @Transactional
     public BookingDto responseToRequest(int bookingId, int userId, Boolean answer) {
         BookingDto dto = BookingMapper.toBookingDto(bookingDao.getBookingById(bookingId));
         if (dto.getItem().getOwner().getId() != userId) {
@@ -55,7 +53,6 @@ public class BookingService {
         return BookingMapper.toBookingDto(bookingDao.responseToRequest(BookingMapper.toBooking(dto), answer));
     }
 
-    @Transactional(readOnly = true)
     public BookingDto getInfoBooking(int bookingId, int userId) {
         userDao.getUserById(userId);
         return BookingMapper.toBookingDto(bookingDao.getInfoBooking(bookingId, userId));

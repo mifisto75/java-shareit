@@ -18,13 +18,11 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    @Transactional
     public UserDto addUser(UserDto userDto) {
         User user = UserMapper.toUser(userDto);
         return UserMapper.toUserDto(userDao.addUser(user));
     }
 
-    @Transactional
     public UserDto updateUser(UserDto userDto, int id) {
         User user = UserMapper.toUser(userDto);
         return UserMapper.toUserDto(userDao.updateUser(user, id));
@@ -44,7 +42,6 @@ public class UserService {
 
     }
 
-    @Transactional
     public void deleteUser(int id) {
         userDao.deleteUser(id);
     }

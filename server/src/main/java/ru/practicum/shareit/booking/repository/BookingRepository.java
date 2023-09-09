@@ -8,6 +8,7 @@ import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
@@ -42,11 +43,11 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             User owner, BookingStatus status, Pageable pageable); //WAITING / REJECTED
 
     Optional<Booking> findFirstByItemIdAndStatusAndStartBeforeOrderByStartDesc(
-            int itemId, BookingStatus status, LocalDateTime dateTime);
+            int itemId,BookingStatus status,LocalDateTime time);
 
     Optional<Booking> findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc(
-            int itemId, BookingStatus status, LocalDateTime dateTime);
+            int itemId,BookingStatus status,LocalDateTime time);
 
-    Boolean existsByBookerIdAndItemIdAndEndIsBefore(
+    Boolean existsByBookerIdAndItemIdAndStartIsBefore(
             int userId, int itemId, LocalDateTime time);
 }

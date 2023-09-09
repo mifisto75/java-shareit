@@ -371,7 +371,7 @@ public class BookingRepositoryTest {
 
 
         Optional<Booking> last = bookingRepository.findFirstByItemIdAndStatusAndStartBeforeOrderByStartDesc(
-                item1.getId(), BookingStatus.APPROVED, LocalDateTime.now());
+                item1.getId(),BookingStatus.APPROVED,LocalDateTime.now());
         Assertions.assertEquals(last.get(), booking2);
     }
 
@@ -411,7 +411,7 @@ public class BookingRepositoryTest {
 
 
         Optional<Booking> last = bookingRepository.findFirstByItemIdAndStatusAndStartAfterOrderByStartAsc(
-                item1.getId(), BookingStatus.APPROVED, LocalDateTime.now());
+                item1.getId(),BookingStatus.APPROVED,LocalDateTime.now());
         Assertions.assertEquals(last.get(), booking2);
     }
 
@@ -455,7 +455,7 @@ public class BookingRepositoryTest {
         booking2.setStatus(BookingStatus.WAITING);
         bookingRepository.save(booking2);
 
-        boolean result = bookingRepository.existsByBookerIdAndItemIdAndEndIsBefore(
+        boolean result = bookingRepository.existsByBookerIdAndItemIdAndStartIsBefore(
                 user1.getId(), item1.getId(), LocalDateTime.now());
         Assertions.assertEquals(result, false);
     }
