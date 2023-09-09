@@ -75,7 +75,7 @@ public class RequestRepositoryTest {
 
         PageRequest page = PageRequest.of(0, 2);
 
-        List<ItemRequest> requests = requestRepository.findAllByRequesterNotLikeOrderByCreatedAsc(user1, page).toList();
+        List<ItemRequest> requests = requestRepository.findAllByRequesterNotOrderByCreatedAsc(user1, page).toList();
 
         Assertions.assertEquals(requests.get(0), itemRequest1);
         Assertions.assertEquals(requests.get(1), itemRequest2);

@@ -41,7 +41,7 @@ public class RequestService {
         return listDto;
     }
 
-    public List<ItemRequestDto> getRequestsAllUsers(int requesterId, int from, int size) {
+    public List<ItemRequestDto> getRequestsAllUsers(Integer requesterId, int from, int size) {
         User user = userDao.getUserById(requesterId);
         List<ItemRequestDto> listDto = requestDao.getRequestsAllUsers(user, from, size)
                 .stream()

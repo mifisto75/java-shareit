@@ -37,7 +37,7 @@ public class RequestDaoImp implements RequestDao {
     @Override
     public List<ItemRequest> getRequestsAllUsers(User requester, int from, int size) {
         return requestRepository
-                .findAllByRequesterNotLikeOrderByCreatedAsc(requester, PageRequest.of(from, size))
+                .findAllByRequesterNotOrderByCreatedAsc(requester, PageRequest.of(from, size))
                 .stream()
                 .collect(Collectors.toList());
     }
