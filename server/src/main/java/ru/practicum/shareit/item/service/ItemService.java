@@ -16,7 +16,7 @@ import ru.practicum.shareit.user.dao.UserDao;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,14 +65,13 @@ public class ItemService {
 
 
     public List<ItemDto> getAllItemsOneUser(int ownerId, int from, int size) {
-        List<ItemDto> itemDtos = itemDao.getAllItemsOneUser(ownerId, from, size)
+        return itemDao.getAllItemsOneUser(ownerId, from, size)
                 .stream()
+                .sorted(Comparator.comparingInt(Item::getId))
                 .map(ItemMapper::toItemDto)
                 .map(this::setDtoComment)
                 .map(this::setDtoNextAndLast)
                 .collect(Collectors.toList());
-        Collections.reverse(itemDtos);
-        return itemDtos;
     }
 
     public List<ItemDto> searchItemByText(String text, int from, int size) {
