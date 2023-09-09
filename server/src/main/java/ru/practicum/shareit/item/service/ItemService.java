@@ -67,10 +67,12 @@ public class ItemService {
     public List<ItemDto> getAllItemsOneUser(int ownerId, int from, int size) {
         return itemDao.getAllItemsOneUser(ownerId, from, size)
                 .stream()
-                .sorted(Comparator.comparingInt(Item::getId))
                 .map(ItemMapper::toItemDto)
                 .map(this::setDtoComment)
                 .map(this::setDtoNextAndLast)
+                .collect(Collectors.toList())
+                .stream()
+                .sorted(Comparator.comparingInt(ItemDto::getId))
                 .collect(Collectors.toList());
     }
 
