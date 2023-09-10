@@ -10,7 +10,6 @@ import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.exeptions.BadRequest;
 import ru.practicum.shareit.exeptions.NotFoundException;
-import ru.practicum.shareit.exeptions.UnknownState;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
@@ -57,7 +56,7 @@ public class BookingDaoImpl implements BookingDao {
     @Transactional(readOnly = true)
     @Override
     public List<Booking> getAllBookingOneUser(User user, String state, int from, int size) {
-        Page<Booking> bookingList;
+        Page<Booking> bookingList = null;
         Pageable page = PageRequest.of(from / size, size);
         switch (state) {
             case "ALL":
@@ -83,8 +82,6 @@ public class BookingDaoImpl implements BookingDao {
                 bookingList = bookingRepository.findAllByBookerAndStatusEqualsOrderByStartDesc(
                         user, BookingStatus.REJECTED, page);
                 break;
-            default:
-                throw new UnknownState("Неизвестный параметр " + state);
         }
         return bookingList
                 .stream()
@@ -94,7 +91,7 @@ public class BookingDaoImpl implements BookingDao {
     @Transactional(readOnly = true)
     @Override
     public List<Booking> getAllBookingOneOwner(User user, String state, int from, int size) {
-        Page<Booking> bookingList;
+        Page<Booking> bookingList = null;
         Pageable page = PageRequest.of(from / size, size);
         switch (state) {
             case "ALL":
@@ -120,8 +117,6 @@ public class BookingDaoImpl implements BookingDao {
                 bookingList = bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc(
                         user, BookingStatus.REJECTED, page);
                 break;
-            default:
-                throw new UnknownState("Неизвестный параметр " + state);
         }
         return bookingList
                 .stream()

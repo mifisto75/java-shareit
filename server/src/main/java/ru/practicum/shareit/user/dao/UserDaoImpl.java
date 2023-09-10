@@ -3,7 +3,7 @@ package ru.practicum.shareit.user.dao;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exeptions.NotFoundException;
-import ru.practicum.shareit.user.Repository.UserRepository;
+import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;

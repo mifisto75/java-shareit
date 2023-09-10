@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.exeptions.BadRequest;
 import ru.practicum.shareit.exeptions.NotFoundException;
-import ru.practicum.shareit.exeptions.UnknownState;
 import ru.practicum.shareit.exeptions.model.ErrorResponse;
 
 @RestControllerAdvice
@@ -25,9 +24,4 @@ public class ErrorHandler {
         return new ErrorResponse("BAD REQUEST", e.getMessage());
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handlerUnknownState(final UnknownState e) {
-        return new ErrorResponse("Unknown state: UNSUPPORTED_STATUS", e.getMessage());
-    }
 }

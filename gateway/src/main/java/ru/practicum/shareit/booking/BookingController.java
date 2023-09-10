@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingClientDto;
 import ru.practicum.shareit.booking.dto.BookingState;
+import ru.practicum.shareit.exeptions.BadRequest;
 import ru.practicum.shareit.exeptions.UnknownState;
 
 import javax.validation.Valid;
@@ -26,6 +27,10 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<Object> addBooking(@Valid @RequestBody BookingClientDto bookingClientDto, @RequestHeader(user) Integer userId) { // Добавление нового запроса на бронирование.
         log.info("метод addBooking userId " + userId);
+        if (bookingClientDto.getStart().isAfter(bookingClientDto.getEnd()) ||
+                bookingClientDto.getStart().equals(bookingClientDto.getEnd())) {
+            throw new BadRequest("ошибка в дате аренды");
+        }
         return bookingClient.addBooking(bookingClientDto, userId);
     }
 

@@ -37,9 +37,6 @@ public class BookingMapper {
         booking.setEnd(inputBookingDto.getEnd());
         booking.setItem(item);
         booking.setBooker(user);
-        if (booking.getStart().isAfter(booking.getEnd()) || booking.getStart().equals(booking.getEnd())) {
-            throw new BadRequest("ошибка в дате аренды");
-        }
         return booking;
     }
 
