@@ -126,7 +126,7 @@ public class BookingDaoImpl implements BookingDao {
     @Transactional(readOnly = true)
     @Override
     public Booking getBookingById(Integer id) {
-        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("такова запроса нет"));
+        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("такого запроса нет")); // =)
     }
 
     @Transactional(readOnly = true)
