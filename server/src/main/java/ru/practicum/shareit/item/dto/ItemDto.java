@@ -20,7 +20,6 @@ public class ItemDto {
     private InputBookingDto lastBooking;
 
     private InputBookingDto nextBooking;
-    private Integer requestId; //  — если вещь была создана по запросу другого пользователя, то в этом
-    //поле будет храниться ссылка на соответствующий запрос.
+    private Integer requestId;
 
 }

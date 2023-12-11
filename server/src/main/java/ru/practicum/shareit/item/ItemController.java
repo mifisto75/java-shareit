@@ -22,13 +22,13 @@ public class ItemController {
     }
 
 
-    @PostMapping // addItems Добавление новой вещи
+    @PostMapping //  Добавление новой вещи
     public ItemDto addItems(@RequestBody ItemDto itemDto, @RequestHeader(user) Integer ownerId) {
         log.info("метод ddItems . userId " + ownerId);
         return itemService.addItem(itemDto, ownerId);
     }
 
-    @PatchMapping("/{itemId}")  //updateItems Редактирование вещи
+    @PatchMapping("/{itemId}")  // Редактирование вещи
     public ItemDto updateItems(@PathVariable Integer itemId, @RequestBody ItemDto itemDto,
                                @RequestHeader(user) Integer ownerId) {
         log.info("метод updateItems . userId " + ownerId + " itemId " + itemId);
@@ -36,13 +36,13 @@ public class ItemController {
     }
 
 
-    @GetMapping("/{itemId}") // getItemsById Просмотр информации о конкретной вещи по её идентификатору
+    @GetMapping("/{itemId}") //  Просмотр информации о конкретной вещи по её идентификатору
     public ItemDto getItemsById(@PathVariable Integer itemId, @RequestHeader(user) Integer ownerId) {
         log.info("метод getItemsById . userId " + ownerId + " itemId " + itemId);
         return itemService.getItemById(itemId, ownerId);
     }
 
-    @GetMapping() // getAllItemsOneUser Просмотр владельцем списка всех его вещей
+    @GetMapping() //  Просмотр владельцем списка всех его вещей
     public List<ItemDto> getAllItemsOneUser(@RequestHeader(user) Integer ownerId,
                                             @RequestParam(defaultValue = "0", required = false) Integer from,
                                             @RequestParam(defaultValue = "20", required = false) Integer size) {
