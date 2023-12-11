@@ -26,7 +26,6 @@ public class Item {
     private User owner; // — владелец вещи;
     @ManyToOne
     @JoinColumn(name = "request_id")
-    private ItemRequest request; //  — если вещь была создана по запросу другого пользователя, то в этом
-    //поле будет храниться ссылка на соответствующий запрос. (оставим для слежущах фз)
+    private ItemRequest request;
 
 }
