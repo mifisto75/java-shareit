@@ -3,7 +3,7 @@
 Это Многосервисное приложение по аренде и сдаче вещей.
 
 Технологии и инструменты: 
-Spring Boot, Lombok, Maven, REST, Docker, postgreSQL, H2, GIT, DTO.
+Spring Boot, Lombok, Maven, REST, Docker, postgreSQL, H2, GIT, DTO, MockMvc.
 
 Многосервисное приложение по аренде и сдаче вещей.
 Первый сервис выполняет валидацию запросов и передаёт проверенные данные второму сервису. 
